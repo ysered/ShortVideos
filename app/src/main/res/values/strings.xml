@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ShortVideos</string>
+    <string name="record_video">Record short video</string>
+    <string name="stop_recording">Stop recording</string>
 </resources>

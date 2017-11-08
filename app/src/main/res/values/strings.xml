@@ -2,4 +2,5 @@
     <string name="app_name">ShortVideos</string>
     <string name="record_video">Record short video</string>
     <string name="stop_recording">Stop recording</string>
+    <string name="switch_camera">Switch camera</string>
 </resources>

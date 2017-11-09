@@ -12,12 +12,20 @@ import kotlinx.android.synthetic.main.activity_record_video.*
 
 class RecordVideoActivityJellyBean : BaseRecordVideoActivity(), SurfaceHolder.Callback {
 
+    companion object {
+        const val EXTRA_CAMERA_ID = "extra_camera_id"
+    }
+
     private var camera: Camera? = null
     private var currentCameraId = Camera.CameraInfo.CAMERA_FACING_BACK
     private var isPreviewing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        savedInstanceState?.let {
+            currentCameraId = it.getInt(EXTRA_CAMERA_ID, Camera.CameraInfo.CAMERA_FACING_BACK)
+        }
 
         surfaceView.holder.apply {
             addCallback(this@RecordVideoActivityJellyBean)
@@ -38,6 +46,13 @@ class RecordVideoActivityJellyBean : BaseRecordVideoActivity(), SurfaceHolder.Ca
     override fun onStop() {
         super.onStop()
         releaseCamera()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.apply {
+            putInt(EXTRA_CAMERA_ID, currentCameraId)
+        }
     }
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder?) {

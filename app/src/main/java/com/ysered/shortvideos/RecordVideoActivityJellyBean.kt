@@ -28,8 +28,16 @@ class RecordVideoActivityJellyBean : BaseRecordVideoActivity(), SurfaceHolder.Ca
             restartPreview(isSwitch = true)
             showPreview(surfaceView.holder)
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
         restartPreview()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        releaseCamera()
     }
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder?) {
@@ -39,10 +47,7 @@ class RecordVideoActivityJellyBean : BaseRecordVideoActivity(), SurfaceHolder.Ca
     override fun surfaceChanged(surfaceHolder: SurfaceHolder?, format: Int, width: Int, height: Int) = Unit
 
     override fun surfaceDestroyed(surfaceHolder: SurfaceHolder?) {
-        camera?.apply {
-            stopPreview()
-            release()
-        }
+        releaseCamera()
     }
 
     private fun showPreview(surfaceHolder: SurfaceHolder?) {
@@ -68,5 +73,13 @@ class RecordVideoActivityJellyBean : BaseRecordVideoActivity(), SurfaceHolder.Ca
         camera = Camera.open(currentCameraId).apply {
             setDisplayOrientation(currentCameraId, rotationDegrees)
         }
+    }
+
+    private fun releaseCamera() {
+        camera?.apply {
+            stopPreview()
+            release()
+        }
+        camera = null
     }
 }

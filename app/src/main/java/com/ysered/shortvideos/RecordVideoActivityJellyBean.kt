@@ -69,8 +69,4 @@ class RecordVideoActivityJellyBean : BaseRecordVideoActivity(), SurfaceHolder.Ca
             setDisplayOrientation(currentCameraId, rotationDegrees)
         }
     }
-
-    private fun switchCameraId() {
-
-    }
 }

@@ -5,6 +5,8 @@ package com.ysered.shortvideos
 import android.hardware.Camera
 import android.os.Bundle
 import android.view.SurfaceHolder
+import com.ysered.shortvideos.utils.rotationDegrees
+import com.ysered.shortvideos.utils.setDisplayOrientation
 import kotlinx.android.synthetic.main.activity_record_video.*
 
 
@@ -63,7 +65,9 @@ class RecordVideoActivityJellyBean : BaseRecordVideoActivity(), SurfaceHolder.Ca
                 stopPreview()
             release()
         }
-        camera = Camera.open(currentCameraId)
+        camera = Camera.open(currentCameraId).apply {
+            setDisplayOrientation(currentCameraId, rotationDegrees)
+        }
     }
 
     private fun switchCameraId() {

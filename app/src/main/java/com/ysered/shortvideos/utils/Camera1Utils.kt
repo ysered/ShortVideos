@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.ysered.shortvideos.utils
 
 import android.hardware.Camera
@@ -20,4 +22,15 @@ private fun getCameraId(lensFacing: Int): Int {
         }
     }
     return cameraId
+}
+
+fun Camera.setDisplayOrientation(cameraId: Int, degrees: Int) {
+    val info = Camera.CameraInfo()
+    Camera.getCameraInfo(cameraId, info)
+    val result = if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+        val tempResult = (info.orientation + degrees) % 360
+        (360 - tempResult) % 360  // compensate the mirror
+    } else
+        (info.orientation - degrees + 360) % 360
+    setDisplayOrientation(result)
 }
